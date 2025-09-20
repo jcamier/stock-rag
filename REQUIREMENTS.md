@@ -40,6 +40,7 @@ This project is a **Proof of Concept (POC)** RAG pipeline built with Django for 
 
 ### Database Architecture
 - **PostgreSQL 16** with **pgvector extension** for vector storage
+  - Single database connection to allow for shared connection pooling
 - **Django models** for:
   - Document metadata (company, year, filing_date, url, status)
   - Query history and performance tracking
