@@ -60,7 +60,7 @@ The system is configured to use these local files via `file://` URLs instead of 
    make ingest
    ```
 
-   **Note**: The system uses pre-downloaded Apple 10-K documents in `sample_documents/` due to SEC blocking issues. See the "SEC Data Access" section above for details.
+   **Note**: The `make setup` command runs Django migrations and sets up pgvector. The system uses pre-downloaded Apple 10-K documents in `sample_documents/` due to SEC blocking issues. See the "SEC Data Access" section above for details.
 
 5. **Test the API:**
    ```bash
@@ -157,7 +157,6 @@ stock-rag/
 │       ├── services/          # Business logic services
 │       ├── utils/             # Utility functions
 │       └── management/        # Django management commands
-├── scripts/                   # Database initialization scripts
 └── tests/                     # Test suite
 ```
 

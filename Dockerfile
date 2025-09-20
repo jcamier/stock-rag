@@ -21,7 +21,6 @@ RUN uv pip install --system -e .
 
 # Copy source code
 COPY src/ ./src/
-COPY scripts/ ./scripts/
 
 # Set Python path
 ENV PYTHONPATH=/app/src

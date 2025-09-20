@@ -354,9 +354,6 @@ stock-rag/
 │   ├── test_models.py
 │   ├── test_views.py
 │   └── test_services.py
-└── scripts/
-    ├── ingest_documents.py
-    └── setup_database.py
 ```
 
 ## Dependencies
