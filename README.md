@@ -11,6 +11,22 @@ A Proof of Concept RAG (Retrieval-Augmented Generation) pipeline built with Djan
 - **REST API**: Clean API design suitable for agent integration
 - **Docker Support**: Containerized deployment with Docker Compose
 
+## Important Note: SEC Data Access
+
+**⚠️ SEC Blocking Issue**: During development, we encountered 403 Forbidden errors when attempting to directly access SEC EDGAR URLs from our Docker containers. The SEC appears to block automated requests from certain IP ranges or user agents.
+
+**Workaround for POC**: For this proof of concept, we manually downloaded the Apple 10-K filings and placed them in the `sample_documents/` directory:
+- `aapl-20230930.html` (2023 10-K)
+- `aapl-20240928.html` (2024 10-K)
+
+The system is configured to use these local files via `file://` URLs instead of direct SEC access.
+
+**Production Considerations**: For production use, consider:
+- Implementing proper SEC-compliant user agents and rate limiting
+- Using official SEC APIs or data feeds
+- Implementing retry logic with exponential backoff
+- Using proxy services or different hosting environments
+
 ## Quick Start
 
 ### Prerequisites
@@ -43,6 +59,8 @@ A Proof of Concept RAG (Retrieval-Augmented Generation) pipeline built with Djan
    make setup
    make ingest
    ```
+
+   **Note**: The system uses pre-downloaded Apple 10-K documents in `sample_documents/` due to SEC blocking issues. See the "SEC Data Access" section above for details.
 
 5. **Test the API:**
    ```bash
@@ -125,6 +143,9 @@ stock-rag/
 ├── Dockerfile                  # Django app container
 ├── pyproject.toml             # Python dependencies and project config
 ├── Makefile                   # Development commands
+├── sample_documents/          # Pre-downloaded Apple 10-K filings (due to SEC blocking)
+│   ├── aapl-20230930.html     # Apple 2023 10-K filing
+│   └── aapl-20240928.html     # Apple 2024 10-K filing
 ├── src/                       # Django application
 │   ├── manage.py              # Django management script
 │   ├── settings.py            # Django settings
@@ -181,6 +202,8 @@ Key environment variables in `.env`:
 1. **Database connection errors**: Ensure PostgreSQL container is running and healthy
 2. **OpenAI API errors**: Check your API key and rate limits
 3. **Ollama connection issues**: Ensure Ollama is running locally or disable it
+4. **SEC 403 Forbidden errors**: The SEC blocks automated requests from Docker containers. Use the pre-downloaded sample documents instead.
+5. **Document ingestion failures**: Ensure the sample documents exist in `sample_documents/` directory
 
 ### Logs
 

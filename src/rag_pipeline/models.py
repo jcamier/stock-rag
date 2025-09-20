@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from pgvector.django import VectorField
 
 
 class Document(models.Model):
@@ -27,6 +28,35 @@ class Document(models.Model):
 
     def __str__(self):
         return f"{self.company} {self.year} 10-K"
+
+
+class Chunk(models.Model):
+    """Model for storing document chunks."""
+
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='chunks')
+    chunk_index = models.IntegerField()
+    chunk_text = models.TextField()
+    section = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['document', 'chunk_index']
+        ordering = ['document', 'chunk_index']
+
+    def __str__(self):
+        return f"Chunk {self.chunk_index} of {self.document}"
+
+
+class Embedding(models.Model):
+    """Model for storing vector embeddings of chunks."""
+
+    chunk = models.OneToOneField(Chunk, on_delete=models.CASCADE, related_name='embedding')
+    embedding = VectorField(dimensions=1536)  # OpenAI text-embedding-3-small dimensions
+    model_name = models.CharField(max_length=100, default='text-embedding-3-small')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Embedding for {self.chunk}"
 
 
 class QueryHistory(models.Model):

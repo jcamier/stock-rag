@@ -21,7 +21,8 @@ dependencies = [
     "tiktoken>=0.5",
     "numpy>=1.24",
     "pandas>=2.0",
-    "python-multipart>=0.0.6",
+        "python-multipart>=0.0.6",
+        "chardet>=5.0",
     "uvicorn>=0.24",
     "gunicorn>=21.0",
 ]

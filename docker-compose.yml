@@ -24,6 +24,7 @@ services:
     volumes:
       - ./src:/app/src
       - ./scripts:/app/scripts
+      - ./sample_documents:/app/sample_documents
     ports:
       - "8000:8000"
     environment:
@@ -36,6 +37,9 @@ services:
       - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY}
       - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY}
       - LANGFUSE_HOST=${LANGFUSE_HOST:-https://cloud.langfuse.com}
+      # Using local files due to SEC blocking automated requests from Docker containers
+      - AAPL_2023_10K_URL=file:///app/sample_documents/aapl-20230930.html
+      - AAPL_2024_10K_URL=file:///app/sample_documents/aapl-20240928.html
     depends_on:
       db:
         condition: service_healthy

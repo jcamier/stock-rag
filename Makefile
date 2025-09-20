@@ -69,10 +69,6 @@ logs:
 logs-backend:
 	docker-compose logs -f backend
 
-# Show frontend logs only
-logs-frontend:
-	docker-compose logs -f frontend
-
 # Shell into backend container
 shell:
 	docker-compose exec backend bash
