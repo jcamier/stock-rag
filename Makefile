@@ -109,7 +109,7 @@ setup-pgvector:
 test-api:
 	@echo "Testing API endpoints..."
 	@echo "Health check:"
-	@curl -s http://localhost:8000/api/health/ | python -m json.tool
+	@curl -s http://localhost:8000/api/health/ | python3 -m json.tool
 	@echo "\nStats:"
-	@curl -s http://localhost:8000/api/stats/ | python -m json.tool
+	@curl -s http://localhost:8000/api/stats/ | python3 -m json.tool
 

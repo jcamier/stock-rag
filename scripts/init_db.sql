@@ -36,13 +36,13 @@ CREATE TABLE IF NOT EXISTS embeddings (
 );
 
 -- Create HNSW index for fast similarity search
-CREATE INDEX IF NOT EXISTS ON embeddings USING hnsw (embedding vector_cosine_ops)
+CREATE INDEX IF NOT EXISTS embeddings_embedding_idx ON embeddings USING hnsw (embedding vector_cosine_ops)
 WITH (m = 16, ef_construction = 200);
 
 -- Create additional indexes for performance
-CREATE INDEX IF NOT EXISTS ON documents (company, year);
-CREATE INDEX IF NOT EXISTS ON chunks (document_id);
-CREATE INDEX IF NOT EXISTS ON chunks (section);
+CREATE INDEX IF NOT EXISTS documents_company_year_idx ON documents (company, year);
+CREATE INDEX IF NOT EXISTS chunks_document_id_idx ON chunks (document_id);
+CREATE INDEX IF NOT EXISTS chunks_section_idx ON chunks (section);
 
 -- Grant permissions
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO postgres;

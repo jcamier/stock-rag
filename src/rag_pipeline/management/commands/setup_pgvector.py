@@ -56,15 +56,15 @@ class Command(BaseCommand):
 
                 # Create HNSW index
                 cursor.execute("""
-                    CREATE INDEX IF NOT EXISTS ON embeddings USING hnsw (embedding vector_cosine_ops)
+                    CREATE INDEX IF NOT EXISTS embeddings_embedding_idx ON embeddings USING hnsw (embedding vector_cosine_ops)
                     WITH (m = 16, ef_construction = 200);
                 """)
                 self.stdout.write(self.style.SUCCESS('✓ HNSW index created'))
 
                 # Create additional indexes
-                cursor.execute("CREATE INDEX IF NOT EXISTS ON documents (company, year);")
-                cursor.execute("CREATE INDEX IF NOT EXISTS ON chunks (document_id);")
-                cursor.execute("CREATE INDEX IF NOT EXISTS ON chunks (section);")
+                cursor.execute("CREATE INDEX IF NOT EXISTS documents_company_year_idx ON documents (company, year);")
+                cursor.execute("CREATE INDEX IF NOT EXISTS chunks_document_id_idx ON chunks (document_id);")
+                cursor.execute("CREATE INDEX IF NOT EXISTS chunks_section_idx ON chunks (section);")
                 self.stdout.write(self.style.SUCCESS('✓ Additional indexes created'))
 
             self.stdout.write(self.style.SUCCESS('\n✓ pgvector setup completed successfully!'))
